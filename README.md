@@ -30,4 +30,9 @@ Aller dans le projet
 
 # Ajout du Support de la CI avec Git Action
 
+# Organisation des tests
+
+    - Le dossier Units/ contient les tests unitaires
+    - Le dossier Features/ Lui contient les tests d'integrations
+
 Le port par defaut est le 8080

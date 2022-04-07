@@ -24,7 +24,7 @@ public class Usager {
 
     private int credit;
 
-    @OneToMany()
+    @OneToMany
     @JsonProperty("address")
     private List<Address> addresses = new ArrayList<>();
 

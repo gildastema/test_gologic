@@ -182,21 +182,3 @@ public class UsagerControllerTest {
     
 }
 
-/**
- * "address": [
- *                                        {
- * 			"street": "5555 Rue DeGaspé",
- * 			"city":"montreal",
- * 			"country": "CA",
- * "province": "QC",
- * "postalCode": "X1XX1X"
- * } ,
- *                    {
- * 			"street": "6666 Rue DeGaspé",
- * 			"city":"montreal",
- * 			"country": "CA",
- * "province": "QC",
- * "postalCode": "X1XX1X"
- * }
- *    ]
- */
