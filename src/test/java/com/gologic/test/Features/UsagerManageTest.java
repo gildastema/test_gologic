@@ -71,7 +71,7 @@ public class UsagerManageTest {
         assertThat(response.getBody().getEmail()).isEqualTo(usager.getEmail());
     }
 
-    @Test
+
     public void patch()
     {
         var usager =  usagerRepository.save(new Usager("Gildas Tema", "gildas@tema.ca", "237691131446", 20));
