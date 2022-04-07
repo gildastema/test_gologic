@@ -9,6 +9,33 @@ Content-Type: application/json
   "credit": 100
 }
 
+### Create Usager with address
+POST http://localhost:8080/api/user
+Content-Type: application/json
+
+{
+  "name": "Gildas Tema",
+  "phone": "237691131446",
+  "email": "gildastema3@gmail.com",
+  "credit": 100,
+  "address": [
+    {
+      "street": "5555 Rue DeGaspé",
+      "city":"montreal",
+      "country": "CA",
+      "province": "QC",
+      "postalCode": "X1XX1X"
+    } ,
+    {
+      "street": "6666 Rue DeGaspé",
+      "city":"montreal",
+      "country": "CA",
+      "province": "QC",
+      "postalCode": "X1XX1X"
+    }
+  ]
+}
+
 ### Get Usager By Id
 GET http://localhost:8080/api/user/1
 Accept: application/json
@@ -19,7 +46,7 @@ Accept: application/json
 
 ### Patch credit for usager
 
-PATCH http://localhost:8080/api/user/1
+PATCH http://localhost:8080/api/user/2
 Content-Type: application/json
 Accept: application/json
 
@@ -37,4 +64,32 @@ Content-Type: application/json
   "phone": "237691131442",
   "email": "gildastema3@gmail.com",
   "credit": 26
+}
+
+### Update Usager By Id with addresses
+PUT http://localhost:8080/api/user/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Bryanna Tema",
+  "phone": "237691131442",
+  "email": "gildastema3@gmail.com",
+  "credit": 26,
+  "address": [
+    {
+      "street": "5555 Rue DeGaspé",
+      "city":"montreal",
+      "country": "CA",
+      "province": "QC",
+      "postalCode": "X1XX1X"
+    } ,
+    {
+      "street": "6666 Rue DeGaspé",
+      "city":"montreal",
+      "country": "CA",
+      "province": "QC",
+      "postalCode": "X1XX1X"
+    }
+  ]
 }

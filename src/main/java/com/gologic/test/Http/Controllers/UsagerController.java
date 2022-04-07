@@ -22,7 +22,7 @@ public class UsagerController {
     public ResponseEntity<Usager> createUsager(@RequestBody  CreateUsagerRequest createUsagerRequest)
     {
        var usager =  usagerService.createUsager( new Usager(createUsagerRequest.getName(), createUsagerRequest.getEmail(),
-                                                        createUsagerRequest.getPhone(), createUsagerRequest.getCredit() ));
+                                                        createUsagerRequest.getPhone(), createUsagerRequest.getCredit(), createUsagerRequest.getAddresses() ));
 
         return new ResponseEntity<>(usager, HttpStatus.CREATED);
     }
@@ -31,11 +31,7 @@ public class UsagerController {
     public ResponseEntity<Usager> getUsagerById(@PathVariable("id") int id)
     {
         var usager = usagerService.findById(id);
-        if (usager.isPresent()){
-            return  ResponseEntity.ok(usager.get());
-        }else {
-            return  new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        return usager.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
     @PatchMapping("/{id}")

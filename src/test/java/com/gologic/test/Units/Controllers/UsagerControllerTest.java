@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gologic.test.Http.Controllers.UsagerController;
 import com.gologic.test.Http.Requests.CreateUsagerRequest;
 import com.gologic.test.Http.Requests.UpdateCreditRequest;
+import com.gologic.test.Models.Address;
 import com.gologic.test.Models.Usager;
 import com.gologic.test.Services.UsagerService;
 import lombok.SneakyThrows;
@@ -19,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -41,6 +43,7 @@ public class UsagerControllerTest {
     public void createUsagerOk() throws Exception
     {
         var usager = new Usager("john doe", "john@doe.ca", "237691131446", 150, 1);
+
         Mockito.when(usagerService.createUsager(ArgumentMatchers.any(Usager.class))  )
                 .thenReturn(  usager);
         mockMvc.perform(
@@ -52,10 +55,33 @@ public class UsagerControllerTest {
           .andExpect(content().json(mapper.writeValueAsString(usager)));
     }
 
+    @SneakyThrows
+    @Test
+    public void createUsageWithAddress()
+    {
+        var usager = new Usager("john doe", "john@doe.ca", "237691131446", 150, 1,
+                Arrays.asList(new Address("5555 Rue DeGaspé", "montreal", "CA", "QC", "X1XX1X"),
+                new Address("6666 Rue DeGaspé", "montreal", "CA", "QC", "X1XX1X")));
+        Mockito.when(usagerService.createUsager(ArgumentMatchers.any(Usager.class))  )
+                .thenReturn(  usager);
+
+        mockMvc.perform(
+                post("/api/user")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString( new CreateUsagerRequest("john doe", "john@doe.ca", "237691131446", 150,
+                                Arrays.asList(new Address("5555 Rue DeGaspé", "montreal", "CA", "QC", "X1XX1X"),
+                                            new Address("6666 Rue DeGaspé", "montreal", "CA", "QC", "X1XX1X")))))
+
+        ).andExpect(status().is(HttpStatus.CREATED.value()))
+                .andExpect(content().json(mapper.writeValueAsString(usager)));
+
+
+    }
+
 
     @SneakyThrows
     @Test
-    public void getUserOK()
+    public void getUsagerOk()
     {
         var id = 1;
         var usager = new Usager("john doe", "john@doe.ca", "237691131446", 150, id);
@@ -69,6 +95,24 @@ public class UsagerControllerTest {
                 .andExpect(content().json(mapper.writeValueAsString(usager)));
 
 
+    }
+
+    @SneakyThrows
+    @Test
+    public void getUsagerWithAddressOk()
+    {
+        var id = 1;
+        var usager = new Usager("john doe", "john@doe.ca", "237691131446", 150, id,
+                Arrays.asList(new Address("5555 Rue DeGaspé", "montreal", "CA", "QC", "X1XX1X"),
+                        new Address("6666 Rue DeGaspé", "montreal", "CA", "QC", "X1XX1X")));
+
+        Mockito.when(usagerService.findById(id)).thenReturn(Optional.of(usager));
+
+        mockMvc.perform(
+                get("/api/user/"+id).accept(MediaType.APPLICATION_JSON)
+
+        ).andExpect(status().isOk())
+                .andExpect(content().json(mapper.writeValueAsString(usager)));
     }
 
     @SneakyThrows
@@ -111,5 +155,48 @@ public class UsagerControllerTest {
         ).andExpect(status().isOk())
          .andExpect(content().json(mapper.writeValueAsString(responseUsager)));
     }
+
+    @SneakyThrows
+    @Test
+    public void updateUsagerWithAddressOk()
+    {
+        var id = 1;
+        var usager = new Usager("john doe", "john@doe.ca", "237691131446", 150, id ,
+                Arrays.asList(new Address("5555 Rue DeGaspé", "montreal", "CA", "QC", "X1XX1X"),
+                new Address("6666 Rue DeGaspé", "montreal", "CA", "QC", "X1XX1X")));
+        var responseUsager = new Usager("gildas Tema", "gildas@tema.ca", "237651881356", 30, id,
+                Arrays.asList(new Address("5555 Rue DeGaspé", "montreal", "CA", "QC", "X1XX1X"),
+                new Address("6666 Rue DeGaspé", "montreal", "CA", "QC", "X1XX1X")));
+
+
+        Mockito.when(usagerService.findById(id)).thenReturn(Optional.of(usager));
+        Mockito.when(usagerService.updateUsager(usager, "gildas Tema", "gildas@tema.ca", "237651881356", 30)).thenReturn(responseUsager);
+
+        mockMvc.perform(
+                put("/api/user/"+id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString( new CreateUsagerRequest("gildas Tema", "gildas@tema.ca", "237651881356", 30) ))
+        ).andExpect(status().isOk())
+                .andExpect(content().json(mapper.writeValueAsString(responseUsager)));
+    }
     
 }
+
+/**
+ * "address": [
+ *                                        {
+ * 			"street": "5555 Rue DeGaspé",
+ * 			"city":"montreal",
+ * 			"country": "CA",
+ * "province": "QC",
+ * "postalCode": "X1XX1X"
+ * } ,
+ *                    {
+ * 			"street": "6666 Rue DeGaspé",
+ * 			"city":"montreal",
+ * 			"country": "CA",
+ * "province": "QC",
+ * "postalCode": "X1XX1X"
+ * }
+ *    ]
+ */
