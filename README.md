@@ -35,6 +35,6 @@ Aller dans le projet
     - Le dossier Units/ contient les tests unitaires
     - Le dossier Features/ Lui contient les tests d'integrations
 
-# Le fichier api.http permet de tester les end points sur Intellij
+Le fichier api.http permet de tester les end points sur Intellij
 
 Le port par defaut est le 8080
