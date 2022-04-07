@@ -1,0 +1,40 @@
+### Create Usager
+POST http://localhost:8080/api/user
+Content-Type: application/json
+
+{
+  "name": "Gildas Tema",
+  "phone": "237691131446",
+  "email": "gildastema3@gmail.com",
+  "credit": 100
+}
+
+### Get Usager By Id
+GET http://localhost:8080/api/user/1
+Accept: application/json
+
+### Get Usager not found
+GET http://localhost:8080/api/user/200
+Accept: application/json
+
+### Patch credit for usager
+
+PATCH http://localhost:8080/api/user/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "credit": 30
+}
+
+### Update Usager By Id
+PUT http://localhost:8080/api/user/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Bryanna Tema",
+  "phone": "237691131442",
+  "email": "gildastema3@gmail.com",
+  "credit": 26
+}
