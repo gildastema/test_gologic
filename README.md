@@ -1,3 +1,5 @@
+[![Java CI with Maven](https://github.com/gildastema/test_gologic/actions/workflows/maven.yml/badge.svg)](https://github.com/gildastema/test_gologic/actions/workflows/maven.yml)
+
 # Projet Test Gologic
 
     Le projet comporte 2 branches
@@ -25,5 +27,7 @@ Aller dans le projet
     java -jar target/test-0.0.1-SNAPSHOT.jar
 
 ````
+
+# Ajout du Support de la CI avec Git Action
 
 Le port par defaut est le 8080
